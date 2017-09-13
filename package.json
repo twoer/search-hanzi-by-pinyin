@@ -1,0 +1,22 @@
+{
+  "name": "search-hanzi-by-pinyin",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "dev": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twoer/searchHanziByPinyin.git"
+  },
+  "author": "zhangkun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/twoer/searchHanziByPinyin/issues"
+  },
+  "homepage": "https://github.com/twoer/searchHanziByPinyin#readme",
+  "devDependencies": {
+    "webpack-dev-server": "^2.7.1"
+  }
+}
