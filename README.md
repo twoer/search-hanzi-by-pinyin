@@ -25,6 +25,6 @@ Demo：[https://twoer.github.io/search-hanzi-by-pinyin/example/](https://twoer.g
 
 返回结果：
 
-`hanzi`：`Array`，搜索关键字，如 `['交', '通']`  
-`list`：`Array`，搜索结果
+`hanzi`：`Array`，搜索关键字，如 `['交', '通']`    
+`list`：`Array`，搜索结果  
 
