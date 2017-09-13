@@ -4,13 +4,94 @@
     <meta charset="UTF-8">
     <title>根据拼音搜索汉字</title>
 </head>
+<style>
+    .wrap
+    {
+        margin: 0px auto;
+        padding: 10px 0px;
+        width: 1000px;
+    }
+    .search-box div
+    {
+        padding: 5px 0px;
+    }
+    .search-box input[type="text"]
+    {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        border: 1px solid #ccc;
+        font-size: 30px;
+        text-align: center;
+    }
+    .search-box input[type="text"]:focus
+    {
+        outline: none;
+        box-shadow: 0 0 1px 1px #2D8CF0;
+    }
+    .search-result
+    {
+        padding: 0px;
+        max-height: 450px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+    .search-result li
+    {
+        padding: 0px;
+        margin: 0px;
+        list-style: none;
+        color: #333;
+        line-height: 40px;
+    }
+    .search-result li .search-key
+    {
+        color: #2D8CF0;
+        font-style: normal;
+    }
+</style>
 <body>
-    
+    <div class="wrap">
+        <div class="search-box">
+            <div>
+                <input type="text" class="key">
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" class="is-initial" checked>按首字母搜索
+                </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;<a href="./test-data.js" target="_blank">数据源</a>
+            </div>
+        </div>
+        <ul class="search-result">
+            
+        </ul>
+    </div>
 </body>
-<script src="../dist/index.js"></script>
+<script src="../src/index.js"></script>
 <script src="./test-data.js"></script>
 <script>
-    var result = pinyinUtils.searchHanziByPinyin('cdxx', testData, 'PINYIN', 'NAME', true);
-    console.log(result);
+    var data = window['testData'] || [];
+    document.querySelector('.key').addEventListener('input', function(){
+        var isInitial = document.querySelector('.is-initial').checked;
+        var result = pinyinUtils.searchHanziByPinyin( this.value , data, 'PINYIN', 'NAME', isInitial);
+        console.log(result);
+        for (var index in result.list) {
+            var item = result.list[index];
+            item.HL_NAME = item.NAME.replace(new RegExp('(' + result.hanzi.join('|') + ')' , 'ig'), '<i class="search-key">$1</i>');
+        }
+        render(result.list);
+    }, false);
+
+    function render(data){
+        var html = [];
+        for (var index in data) {
+            html.push('<li>');
+            html.push(data[index].HL_NAME || data[index].NAME);
+            html.push('</li>');
+        }
+        document.querySelector('.search-result').innerHTML = html.join('');
+    }
+    render(data);
 </script>
 </html>

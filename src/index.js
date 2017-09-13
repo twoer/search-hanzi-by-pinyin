@@ -11,7 +11,7 @@
         searchHanziByPinyin(key, list, pinyinKey, hanziKey, isInitial){
             var _initialKey= '__INITIAL';
             var _result = {
-                hanzi: null,
+                hanzi: [],
                 list: []
             };
             if( !key || !_isArray(list) || list.length === 0 || !pinyinKey || !hanziKey ){
@@ -31,7 +31,7 @@
                 });
             }
             if( _filterResult.length > 0 ){
-                _result.hanzi = _key;
+                _result.hanzi.push( _key );
                 _result.list = _filterResult;
                 return _result;
             }
@@ -57,8 +57,9 @@
                 return _result;
             }
 
-            var _pyFilterRegex = new RegExp('\\d+' + _key.split('').join('\\d+') + '\\d+', 'ig');
+            var _pyFilterRegex = new RegExp('\\d*' + _key.split('').join('\\d*') + '\\d*', 'ig');
             var _hanziList = [];
+            var _validList = [];
             _filterResult.forEach((item)=>{
                 var _newpy = [];
                 var _oldpy = item[pinyinKey].split(' ');
@@ -74,6 +75,9 @@
                 }
                 var _hanzi = [];
                 _word = _word.match(/\d+/g);
+                if(!_word || _word.length < 2){
+                    return false;
+                }
                 _word.pop();
                 _word.forEach((idx)=>{
                     _hanzi.push( item[hanziKey].substr(idx, 1));
@@ -82,9 +86,10 @@
                 if( _hanziList.indexOf(_hanzistr) === -1 ){
                     _hanziList.push(_hanzistr);
                 }
+                _validList.push(item);
             });
             _result.hanzi = _hanziList;
-            _result.list = _filterResult;
+            _result.list = _validList;
             return _result;
         }
     };
