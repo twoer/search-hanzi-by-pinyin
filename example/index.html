@@ -73,21 +73,29 @@
 <script>
     var data = window['testData'] || [];
     document.querySelector('.key').addEventListener('input', function(){
+        if( this.value === '' ){
+            render(data);
+            return;
+        }
         var isInitial = document.querySelector('.is-initial').checked;
         var result = pinyinUtils.searchHanziByPinyin( this.value , data, 'PINYIN', 'NAME', isInitial);
         console.log(result);
+        var list = [];
         for (var index in result.list) {
-            var item = result.list[index];
+            var item = {
+                NAME: result.list[index].NAME
+            };
             item.HL_NAME = item.NAME.replace(new RegExp('(' + result.hanzi.join('|') + ')' , 'ig'), '<i class="search-key">$1</i>');
+            list.push(item);
         }
-        render(result.list);
+        render(list);
     }, false);
 
-    function render(data){
+    function render(list){
         var html = [];
-        for (var index in data) {
+        for (var index in list) {
             html.push('<li>');
-            html.push(data[index].HL_NAME || data[index].NAME);
+            html.push(list[index].HL_NAME || list[index].NAME);
             html.push('</li>');
         }
         document.querySelector('.search-result').innerHTML = html.join('');
