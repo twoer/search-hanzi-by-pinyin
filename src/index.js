@@ -7,7 +7,7 @@
     function _isArray( array ){
         return Object.prototype.toString.call( array ) === '[object Array]';
     };
-    var _ = {
+    var pinyinUtils = {
         searchHanziByPinyin(key, list, pinyinKey, hanziKey, isInitial){
             var _initialKey= '__INITIAL';
             var _result = {
@@ -88,5 +88,5 @@
             return _result;
         }
     };
-    return _;
+    return pinyinUtils;
 })));
